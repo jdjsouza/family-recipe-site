@@ -28,7 +28,6 @@ CREATE TABLE "recipes" (
 CREATE TABLE "ingredients" (
   "id" SERIAL PRIMARY KEY,
   "ingredients" VARCHAR (80) NOT NULL,
-  "quantity" INT NOT NULL,
   "recipe_id" INT
 );
 
@@ -46,6 +45,7 @@ CREATE TABLE "access_level" (
 
 CREATE TABLE "units" (
   "id" SERIAL PRIMARY KEY,
+  "quantity" INT NOT NULL,
   "unit" VARCHAR,
   "ingredient_id" INT
 );
