@@ -3,7 +3,7 @@
 -- You must use double quotes in every query that user is in:
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
-CREATE TABLE "users" (
+CREATE TABLE "user" (
   "id" SERIAL PRIMARY KEY,
   "username" VARCHAR (80) UNIQUE NOT NULL,
   "password" VARCHAR (1000) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE "recipes" (
 
 CREATE TABLE "ingredients" (
   "id" SERIAL PRIMARY KEY,
-  "ingredients" VARCHAR (80) NOT NULL,
+  "ingredient" VARCHAR (80) NOT NULL,
   "recipe_id" INT
 );
 
@@ -58,9 +58,9 @@ CREATE TABLE "recipe_dish" (
 
 ALTER TABLE "ingredients" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
 
-ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
-ALTER TABLE "access_level" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "access_level" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
 ALTER TABLE "units" ADD FOREIGN KEY ("ingredient_id") REFERENCES  "ingredients" ("id") ;
 
