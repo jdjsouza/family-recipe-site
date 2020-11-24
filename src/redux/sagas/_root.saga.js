@@ -1,5 +1,6 @@
 import { all } from 'redux-saga/effects';
 import addRecipeSaga from './add.recipe.saga';
+import getRandomDetailsSaga from './get.random.recipe.saga';
 import getRecipeDetailsSaga from './get.recipe.details.saga';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
@@ -19,5 +20,6 @@ export default function* rootSaga() {
     userSaga(),
     addRecipeSaga(),
     getRecipeDetailsSaga(),
+    getRandomDetailsSaga(),
   ]);
 }

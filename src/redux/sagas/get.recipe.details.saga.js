@@ -4,7 +4,7 @@ import axios from 'axios';
 // START GET for details for Details page
 function* getRecipeDetails(action) {
   try {
-    const response = yield axios.get(`/api/movie/details/${action.payload}`);
+    const response = yield axios.get(`/api/recipe/details/${action.payload}`);
     yield put({
       type: 'SET_RECIPE_DETAILS',
       payload: response.data,
