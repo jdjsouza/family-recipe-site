@@ -36,18 +36,22 @@ router.get('/user/:id', (req, res) => {
 
 // Get all recipes (name, pic, brief_desc) with a specific dish type
 
-// router.get('/dish/:id', (req, res) => {
-//   const queryText = 'SELECT id, recipe_name, picture, description FROM recipes';
-//   pool
-//     .query(queryText)
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Error getting specific dish recipes', err);
-//       res.sendStatus(500);
-//     });
-// });
+router.get('/dish/:id', (req, res) => {
+  const queryText = `SELECT "recipes".id, "recipes".recipe_name, "recipes".picture, "recipes".brief_description, "recipe_dish".dish_id 
+  FROM recipes, recipe_dish
+  WHERE "recipe_dish".recipe_id = "recipes".id AND "recipe_dish".dish_id = $1
+  ORDER BY "recipe_name" ASC;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting specific dish recipes', err);
+      res.sendStatus(500);
+    });
+});
 
 // Get all recipes (name, pic, brief_desc) with a ingredient
 
