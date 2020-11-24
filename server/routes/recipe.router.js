@@ -32,7 +32,7 @@ router.get('/random', (req, res) => {
         });
     })
     .catch((err) => {
-      console.log('Error getting random recipes', err);
+      console.log('Error getting random recipe ID', err);
       res.sendStatus(500);
     });
 });
@@ -51,7 +51,7 @@ router.get('/user', (req, res) => {
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log('Error getting creator recipes', err);
+      console.log('Error getting creators', err);
       res.sendStatus(500);
     });
 });
@@ -65,6 +65,25 @@ router.get('/user/:id', (req, res) => {
   ORDER BY "recipe_name" ASC;`;
   pool
     .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting creator recipes', err);
+      res.sendStatus(500);
+    });
+});
+
+// Get all Dish Types that have recipes associated with them for browsing
+// URL: /api/recipe/dish/
+
+router.get('/dish', (req, res) => {
+  const queryText = `SELECT "type_of_dish".dish_types FROM "type_of_dish"
+  WHERE EXISTS 
+  (SELECT "recipe_dish".dish_id from "recipe_dish" where "recipe_dish".dish_id = "type_of_dish".id)
+  ORDER BY "type_of_dish".id ASC;`;
+  pool
+    .query(queryText)
     .then((result) => {
       res.send(result.rows);
     })
