@@ -1,21 +1,40 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const {
+  rejectUnauthenticated,
+} = require('../modules/authentication-middleware');
 
 // this get is for a random recipe to be displayed on the homepage
 
-// router.get('/random', (req, res) => {
-//   const queryText = 'SELECT id, recipe_name, picture, description FROM recipes';
-//   pool
-//     .query(queryText)
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Error getting random recipes', err);
-//       res.sendStatus(500);
-//     });
-// });
+router.get('/random', (req, res) => {
+  const queryText = `SELECT id FROM "recipes" ORDER BY RANDOM() LIMIT 1;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      const randomID = Number(result.rows[0].id);
+      console.log(randomID);
+      const queryText = `SELECT "recipes".*, array_agg("ingredients".ingredient || ' ' || "ingredients".quantity || ' ' || "units".unit) as "ingredients"
+      FROM "recipes", "ingredients", "units", "ingredients_units" 
+      WHERE "recipes".id = $1 AND "ingredients".recipe_id = $1 AND "units".id = "ingredients_units".units_id
+      AND "ingredients_units".ingredients_id = "ingredients".id
+      GROUP BY "recipes".id;`;
+      pool
+        .query(queryText, [randomID])
+        .then((result) => {
+          console.log(result.rows);
+          res.send(result.rows);
+        })
+        .catch((err) => {
+          console.log('Error getting random recipe details', err);
+          res.sendStatus(500);
+        });
+    })
+    .catch((err) => {
+      console.log('Error getting random recipes', err);
+      res.sendStatus(500);
+    });
+});
 
 // Get all recipes (name, pic, brief_desc) created by a specific creator
 
@@ -83,14 +102,14 @@ router.get('/details/:id', (req, res) => {
       res.send(result.rows);
     })
     .catch((err) => {
-      console.log('Error getting random recipes', err);
+      console.log('Error getting recipe details', err);
       res.sendStatus(500);
     });
 });
 
 // POST recipe will send info to multiple tables
 
-router.post('/', (req, res) => {
+router.post('/', rejectUnauthenticated, (req, res) => {
   try {
     console.log(req.body);
     // RETURNING "id" will give us back the id of the created recipe

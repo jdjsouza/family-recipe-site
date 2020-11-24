@@ -69,3 +69,44 @@ ALTER TABLE "ingredients_units" ADD FOREIGN KEY ("ingredients_id") REFERENCES "i
 ALTER TABLE "recipes" ADD FOREIGN KEY ("user_id") REFERENCES "user" ("id");
 
 ALTER TABLE "ingredients" ADD FOREIGN KEY ("recipe_id") REFERENCES "recipes" ("id");
+
+-- Find contraints in table
+select *
+from information_schema.key_column_usage
+where position_in_unique_constraint is not null;
+
+-- Alter tables to allow for cascade deletion of records
+alter table  ingredients
+drop constraint ingredients_recipe_id_fkey,
+add constraint ingredients_recipe_id_fkey 
+	foreign key ("recipe_id")
+	references recipes(id)
+	ON DELETE CASCADE;
+
+alter table  recipe_dish
+drop constraint recipe_dish_dish_id_fkey,
+add constraint recipe_dish_dish_id_fkey 
+	foreign key ("dish_id")
+	references type_of_dish(id)
+	ON DELETE CASCADE;
+
+alter table  recipe_dish
+drop constraint recipe_dish_recipe_id_fkey,
+add constraint recipe_dish_recipe_id_fkey 
+	foreign key ("recipe_id")
+	references recipes(id)
+	ON DELETE CASCADE;
+
+alter table  ingredients_units
+drop constraint ingredients_units_units_id_fkey,
+add constraint ingredients_units_units_id_fkey 
+	foreign key ("units_id")
+	references units(id)
+	ON DELETE CASCADE;
+
+alter table  ingredients_units
+drop constraint ingredients_units_ingredients_id_fkey,
+add constraint ingredients_units_ingredients_id_fkey 
+	foreign key ("ingredients_id")
+	references ingredients(id)
+	ON DELETE CASCADE;
