@@ -15,7 +15,7 @@ function* getDishTypes(action) {
 }
 
 function* getDishTypesSaga() {
-  yield takeLatest('GET_USERS', getDishTypes);
+  yield takeLatest('GET_DISH_TYPES', getDishTypes);
 }
 
 export default getDishTypesSaga;

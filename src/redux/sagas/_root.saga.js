@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects';
 import addRecipeSaga from './add.recipe.saga';
 import getUsersSaga from './browse.by.user.saga';
 import getDishTypesSaga from './browse.dish.types.saga';
+import getByDishTypeSaga from './get.by.dish.saga';
 import getByUserSaga from './get.by.user.saga';
 import getRandomDetailsSaga from './get.random.recipe.saga';
 import getRecipeDetailsSaga from './get.recipe.details.saga';
@@ -27,5 +28,6 @@ export default function* rootSaga() {
     getByUserSaga(),
     getUsersSaga(),
     getDishTypesSaga(),
+    getByDishTypeSaga(),
   ]);
 }
