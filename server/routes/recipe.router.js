@@ -72,13 +72,11 @@ router.get('/dish/:id', (req, res) => {
 // the call ID will be passed from multiple pages: browse by creator, browse by specific dish type, search results
 
 router.get('/details/:id', (req, res) => {
-  const queryText = `SELECT "recipes".*, array_agg("ingredients".*) as "ingredients", 
-  array_agg("units".*) as "units"
+  const queryText = `SELECT "recipes".*, array_agg("ingredients".ingredient || ' ' || "ingredients".quantity || ' ' || "units".unit) as "ingredients"
   FROM "recipes", "ingredients", "units", "ingredients_units" 
   WHERE "recipes".id = $1 AND "ingredients".recipe_id = $1 AND "units".id = "ingredients_units".units_id
   AND "ingredients_units".ingredients_id = "ingredients".id
-  GROUP BY "recipes".id
-  ORDER BY "recipe_name" ASC;`;
+  GROUP BY "recipes".id;`;
   pool
     .query(queryText, [req.params.id])
     .then((result) => {
