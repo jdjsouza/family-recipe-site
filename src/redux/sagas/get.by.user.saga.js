@@ -1,6 +1,6 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-
+// Everything by a specific user
 // START GET for browse by creator
 function* getByUser(action) {
   try {

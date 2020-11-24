@@ -3,6 +3,7 @@ import errors from './errors.reducer';
 import user from './user.reducer';
 import recipeDetails from './recipe.details.reducer';
 import randomDetails from './random.recipe.reducer';
+import theCreators from './browse.by.user.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   recipeDetails, // contains all the details to be displayed on details page
   randomDetails, // contains the details from the randomly selected recipe for the home page
+  theCreators, // contains the list of people who've created recipes for browsing by
 });
 
 export default rootReducer;
