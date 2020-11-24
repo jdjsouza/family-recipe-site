@@ -37,6 +37,25 @@ router.get('/random', (req, res) => {
     });
 });
 
+// GET all users who have submitted a recipe
+// URL: /api/recipe/user
+
+router.get('/user', (req, res) => {
+  const queryText = `SELECT "user"."firstName" FROM "user"
+  WHERE EXISTS 
+  (SELECT "recipes".user_id from  "recipes" where "recipes".user_id = "user".id)
+  ORDER BY "user"."firstName" DESC;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting creator recipes', err);
+      res.sendStatus(500);
+    });
+});
+
 // GET all recipes (name, pic, brief_desc) created by a specific creator
 // URL: /api/recipe/user/:id
 
