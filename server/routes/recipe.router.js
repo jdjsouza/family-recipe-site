@@ -53,9 +53,9 @@ router.get('/dish/:id', (req, res) => {
     });
 });
 
-// Get all recipes (name, pic, brief_desc) with a ingredient
+// Get all recipes (name, pic, brief_desc) with an ingredient specified in the search bar
 
-// router.get('/dish/:id', (req, res) => {
+// router.get('/', (req, res) => {
 //   const queryText = 'SELECT id, recipe_name, picture, description FROM recipes';
 //   pool
 //     .query(queryText)
@@ -68,147 +68,117 @@ router.get('/dish/:id', (req, res) => {
 //     });
 // });
 
-// This will be used to pull all the info for a the details page
+// This will be used to pull all the info for the details page
 // the call ID will be passed from multiple pages: browse by creator, browse by specific dish type, search results
 
-// router.get('/details/:id', (req, res) => {
-//   const queryText = 'SELECT id, recipe_name, picture, description FROM recipes';
-//   pool
-//     .query(queryText)
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Error getting random recipes', err);
-//       res.sendStatus(500);
-//     });
-// });
+router.get('/details/:id', (req, res) => {
+  const queryText = `SELECT "recipes".*, array_agg("ingredients".*) as "ingredients", 
+  array_agg("units".*) as "units"
+  FROM "recipes", "ingredients", "units", "ingredients_units" 
+  WHERE "recipes".id = $1 AND "ingredients".recipe_id = $1 AND "units".id = "ingredients_units".units_id
+  AND "ingredients_units".ingredients_id = "ingredients".id
+  GROUP BY "recipes".id
+  ORDER BY "recipe_name" ASC;`;
+  pool
+    .query(queryText, [req.params.id])
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting random recipes', err);
+      res.sendStatus(500);
+    });
+});
 
 // POST recipe will send info to multiple tables
 
 router.post('/', (req, res) => {
-  console.log(req.body);
-  // RETURNING "id" will give us back the id of the created recipe
-  const insertRecipeQuery = `
+  try {
+    console.log(req.body);
+    // RETURNING "id" will give us back the id of the created recipe
+    const insertRecipeQuery = `
   INSERT INTO "recipes" ("recipe_name", "picture", "prep_time", "cook_time", 
   "brief_description", "instructions", "user_id")
   VALUES ($1, $2, $3, $4, $5, $6, $7)
   RETURNING "id";`;
 
-  // FIRST QUERY MAKES RECIPE
-  pool
-    .query(insertRecipeQuery, [
-      req.body.recipe_name,
-      req.body.picture,
-      req.body.prep_time,
-      req.body.cook_time,
-      req.body.brief_description,
-      req.body.instructions,
-      req.body.user_id,
-    ])
-    .then((result) => {
-      for (let i = 0; i < req.body.dish_id.length; i++) {
-        console.log('New Recipe Id:', result.rows[0].id); //ID IS HERE!
-
+    // FIRST QUERY MAKES RECIPE
+    pool
+      .query(insertRecipeQuery, [
+        req.body.recipe_name,
+        req.body.picture,
+        req.body.prep_time,
+        req.body.cook_time,
+        req.body.brief_description,
+        req.body.instructions,
+        req.body.user_id,
+      ])
+      .then((result) => {
         const createdRecipeId = result.rows[0].id;
+        const allDishRelationships = [];
+        for (let i = 0; i < req.body.dish_id.length; i++) {
+          console.log('New Recipe Id:', result.rows[0].id); //ID IS HERE!
 
-        // Depending on how you make your junction table, this insert COULD change.
-        const insertRecipeDishQuery = `
+          // Depending on how you make your junction table, this insert COULD change.
+          const insertRecipeDishQuery = `
       INSERT INTO "recipe_dish" ("recipe_id", "dish_id")
       VALUES  ($1, $2);
       `;
-        // SECOND QUERY MAKES RECIPE TO DISH TYPE RELATION IN JUNCTION TABLE
-        pool
-          .query(insertRecipeDishQuery, [createdRecipeId, req.body.dish_id[i]])
-          .then((result) => {
-            //Now that both are done, send back success!
-            res.sendStatus(201);
-          })
-          .catch((err) => {
-            // catch for second query
-            console.log('second query post', err);
-            res.sendStatus(500);
+          // SECOND QUERY MAKES RECIPE TO DISH TYPE RELATION IN JUNCTION TABLE
+          allDishRelationships.push(
+            pool.query(insertRecipeDishQuery, [
+              createdRecipeId,
+              req.body.dish_id[i],
+            ])
+          );
+        }
+
+        let allIngredients = [];
+        for (let i = 0; i < req.body.materials.length; i++) {
+          console.log('Third Query New Recipe Id:', result.rows[0].id); //ID IS HERE!
+
+          const insertRecipeDishQuery = `
+        INSERT INTO "ingredients" ("recipe_id", "ingredient", "quantity")
+        VALUES  ($1, $2, $3)
+        RETURNING "id";`;
+
+          // THIRD QUERY ADDS INGREDIENTS TO INGREDIENT TABLE
+          allIngredients.push(
+            pool.query(insertRecipeDishQuery, [
+              createdRecipeId,
+              req.body.materials[i].ingredient,
+              req.body.materials[i].quantity,
+            ])
+          );
+        }
+        Promise.all(allDishRelationships); // 0, 1, 2 all are back, and move on to .then
+        Promise.all(allIngredients) // .then .catch
+          .then((resultList) => {
+            let ingredientUnit = [];
+            console.log(resultList);
+
+            for (let i = 0; i < resultList.length; i++) {
+              const createdIngredientId = resultList[i].rows[0].id;
+              const insertUnitQuery = `
+      INSERT INTO "ingredients_units" ("units_id", "ingredients_id")
+      VALUES  ($1, $2);`;
+
+              ingredientUnit.push(
+                pool.query(insertUnitQuery, [
+                  req.body.materials[i].unit_id,
+                  createdIngredientId,
+                ])
+              );
+            }
+            Promise.all(ingredientUnit).then((result) => {
+              res.sendStatus(201);
+            });
           });
-      }
-    })
-    .then((result) => {
-      for (let i = 0; i < req.body.materials.length; i++) {
-        console.log('Third Query New Recipe Id:', result.rows[0].id); //ID IS HERE!
-
-        const insertRecipeDishQuery = `
-      INSERT INTO "ingredients" ("recipe_id", "ingredient", "quantity"),
-      VALUES  ($1, $2, $3)
-      RETURNING "id";`;
-
-        // THIRD QUERY ADDS INGREDIENTS TO INGREDIENT TABLE
-        pool
-          .query(insertRecipeDishQuery, [
-            createdRecipeId,
-            req.body.materials[i].ingredient,
-            req.body.materials[i].quantity,
-          ])
-          .then((result) => {
-            const createdIngredientId = result.rows[0].id;
-            const insertUnitQuery = `
-      INSERT INTO "ingredient_units" ("units_id" "ingredients_id")
-      VALUES  ($1, $2)
-      RETURNING "id";
-      `;
-            pool
-              .query(insertUnitQuery, [
-                createdIngredientId,
-                req.body.materials[i].unit_id,
-              ])
-              .then((result) => {
-                res.sendStatus(201);
-              })
-              .catch((err) => {
-                console.log('fourth super nested post', err);
-                res.sendStatus(500);
-              });
-            //Now that both are done, send back success!
-            res.sendStatus(201);
-          })
-          .catch((err) => {
-            // catch for third query
-            console.log('third query post', err);
-            res.sendStatus(500);
-          });
-      }
-    })
-    // .then((result) => {
-    //   for (let i = 0; i < req.body.materials.length; i++) {
-    //     console.log('New Recipe Id:', result.rows[0].id); //ID IS HERE!
-
-    //     const createdIngredientId = result.rows[0].id;
-
-    //       const insertUnitQuery = `
-    //     INSERT INTO "ingredient_units" ("units_id" "ingredients_id")
-    //     VALUES  ($1, $2)
-    //     RETURNING "id";
-    //     `;
-    //     // FOURTH QUERY JUNCTION INGREDIENTS TABLE AND UNIT TABLE
-    //     pool
-    //       .query(insertRecipeDishQuery, [
-    //         createdIngredientId,
-    //         req.body.unitId[i],
-    //       ])
-    //       .then((result) => {
-    //         //Now that both are done, send back success!
-    //         res.sendStatus(201);
-    //       })
-    //       .catch((err) => {
-    //         // catch for fourth query
-    //         console.log('fourth query post', err);
-    //         res.sendStatus(500);
-    //       });
-    //   }
-    // })
-    // Catch for first query
-    .catch((err) => {
-      console.log('first query post', err);
-      res.sendStatus(500);
-    });
+      });
+  } catch (err) {
+    console.log('first query post', err);
+    res.sendStatus(500);
+  }
 });
 
 module.exports = router;
