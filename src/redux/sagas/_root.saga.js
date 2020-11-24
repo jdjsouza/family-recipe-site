@@ -1,4 +1,6 @@
 import { all } from 'redux-saga/effects';
+import addRecipeSaga from './add.recipe.saga';
+import getRecipeDetailsSaga from './get.recipe.details.saga';
 import loginSaga from './login.saga';
 import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
@@ -15,5 +17,7 @@ export default function* rootSaga() {
     loginSaga(), // login saga is now registered
     registrationSaga(),
     userSaga(),
+    addRecipeSaga(),
+    getRecipeDetailsSaga(),
   ]);
 }

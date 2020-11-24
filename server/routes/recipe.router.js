@@ -5,7 +5,8 @@ const {
   rejectUnauthenticated,
 } = require('../modules/authentication-middleware');
 
-// this get is for a random recipe to be displayed on the homepage
+// GET is for a random recipe to be displayed on the homepage
+// URL: /api/recipe/random
 
 router.get('/random', (req, res) => {
   const queryText = `SELECT id FROM "recipes" ORDER BY RANDOM() LIMIT 1;`;
@@ -36,7 +37,8 @@ router.get('/random', (req, res) => {
     });
 });
 
-// Get all recipes (name, pic, brief_desc) created by a specific creator
+// GET all recipes (name, pic, brief_desc) created by a specific creator
+// URL: /api/recipe/user/:id
 
 router.get('/user/:id', (req, res) => {
   const queryText = `SELECT id, recipe_name, picture, brief_description FROM recipes
@@ -54,6 +56,7 @@ router.get('/user/:id', (req, res) => {
 });
 
 // Get all recipes (name, pic, brief_desc) with a specific dish type
+// URL: /api/recipe/dish/:id
 
 router.get('/dish/:id', (req, res) => {
   const queryText = `SELECT "recipes".id, "recipes".recipe_name, "recipes".picture, "recipes".brief_description, "recipe_dish".dish_id 
@@ -89,6 +92,7 @@ router.get('/dish/:id', (req, res) => {
 
 // This will be used to pull all the info for the details page
 // the call ID will be passed from multiple pages: browse by creator, browse by specific dish type, search results
+// URL: /api/recipe/details/:id
 
 router.get('/details/:id', (req, res) => {
   const queryText = `SELECT "recipes".*, array_agg("ingredients".ingredient || ' ' || "ingredients".quantity || ' ' || "units".unit) as "ingredients"
@@ -108,6 +112,7 @@ router.get('/details/:id', (req, res) => {
 });
 
 // POST recipe will send info to multiple tables
+// URL: /api/recipe/
 
 router.post('/', rejectUnauthenticated, (req, res) => {
   try {
@@ -197,5 +202,11 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     res.sendStatus(500);
   }
 });
+
+// Need PUT route, require authentication logged in user must match creator username
+// URL: /api/recipe/
+
+// DELETE RECIPE ROUTE needed - ADMIN Only Function
+// URL: /api/recipe/
 
 module.exports = router;

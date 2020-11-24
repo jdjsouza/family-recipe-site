@@ -14,6 +14,10 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
+// UPDATE POST to include firstName, lastName, emailAddress
+// Have to change the register user page to only load for admin
+// And send a link for first sign in/create || change password
+
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen
 // is that the password gets encrypted before being inserted
