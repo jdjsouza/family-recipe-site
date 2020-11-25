@@ -3,8 +3,9 @@ CREATE TABLE "user" (
   "username" VARCHAR (80) UNIQUE NOT NULL,
   "password" VARCHAR (1000) NOT NULL,
   "firstName" VARCHAR (20),
-  "lastname" VARCHAR (20),
-  "emailaddress" VARCHAR (40)
+  "lastName" VARCHAR (20),
+  "emailaddress" VARCHAR (40),
+  "access_level" INT
 );
 
 CREATE TABLE "recipes" (
@@ -34,7 +35,6 @@ CREATE TABLE "type_of_dish" (
 
 CREATE TABLE "access_level" (
   "id" SERIAL PRIMARY KEY,
-  "user_id" INT,
   "access" INT,
   "access_title" VARCHAR
 );
