@@ -2,9 +2,9 @@ CREATE TABLE "user" (
   "id" SERIAL PRIMARY KEY,
   "username" VARCHAR (80) UNIQUE NOT NULL,
   "password" VARCHAR (1000) NOT NULL,
-  "firstName" VARCHAR (20),
-  "lastName" VARCHAR (20),
-  "emailaddress" VARCHAR (40),
+  "first_name" VARCHAR (20),
+  "last_name" VARCHAR (20),
+  "email" VARCHAR (40),
   "access_level" INT
 );
 

@@ -174,9 +174,10 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         req.body.user_id,
       ])
       .then((result) => {
-        const createdRecipeId = result.rows[0].id;
-        const allDishRelationships = [];
+        const createdRecipeId = result.rows[0].id; // Need the ID from the table for the previous query
+        const allDishRelationships = []; // putting .query in the array
         for (let i = 0; i < req.body.dish_id.length; i++) {
+          // iterate through the thing I need to insert multiple times
           console.log('New Recipe Id:', result.rows[0].id); //ID IS HERE!
 
           // Depending on how you make your junction table, this insert COULD change.
@@ -186,6 +187,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       `;
           // SECOND QUERY MAKES RECIPE TO DISH TYPE RELATION IN JUNCTION TABLE
           allDishRelationships.push(
+            // pushing pool.query into this array for the Promise.all
             pool.query(insertRecipeDishQuery, [
               createdRecipeId,
               req.body.dish_id[i],
@@ -193,7 +195,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
           );
         }
 
-        let allIngredients = [];
+        let allIngredients = []; // another array for another loop
         for (let i = 0; i < req.body.materials.length; i++) {
           console.log('Third Query New Recipe Id:', result.rows[0].id); //ID IS HERE!
 
@@ -204,6 +206,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
 
           // THIRD QUERY ADDS INGREDIENTS TO INGREDIENT TABLE
           allIngredients.push(
+            // pushing pool.query into this array for the Promise.all
             pool.query(insertRecipeDishQuery, [
               createdRecipeId,
               req.body.materials[i].ingredient,
@@ -212,6 +215,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
           );
         }
         Promise.all(allDishRelationships); // 0, 1, 2 all are back, and move on to .then
+        // demands all promises be returned for the pool.queries in the array we made allDishRelationships
         Promise.all(allIngredients) // .then .catch
           .then((resultList) => {
             let ingredientUnit = [];

@@ -6,6 +6,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 class UserPage extends Component {
   // this component doesn't do much to start, just renders some user info to the DOM
   render() {
+    console.log(this.props.store.user);
     return (
       <div>
         <h1 id="welcome">Welcome, {this.props.store.user.username}!</h1>
