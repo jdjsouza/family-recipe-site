@@ -12,14 +12,7 @@ import Grid from '@material-ui/core/Grid';
 const Footer = () => (
   <div className="nav-btm">
     <Grid container spacing={1} direction="row" justify="center">
-      <Grid
-        item
-        xs="93"
-        sm="95"
-        md="94"
-        lg="93"
-        style={{ textAlign: 'center' }}
-      >
+      <Grid item xs="3" sm="5" md="4" lg="3" style={{ textAlign: 'center' }}>
         <Link className="btm-nav-link" to="/about">
           About |
         </Link>

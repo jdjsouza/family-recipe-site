@@ -4,37 +4,29 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 import './LandingPage.css';
 
-// CUSTOM COMPONENTS
-import RegisterForm from '../RegisterForm/RegisterForm';
+// Import @material-UI
+import Grid from '@material-ui/core/Grid';
 
 class LandingPage extends Component {
-  // state = {
-  //   heading: 'Class Component',
-  // };
-
-  onLogin = (event) => {
-    this.props.history.push('/login');
-  };
-
+  componentDidMount() {
+    // this.props.dispatch({
+    //   type: 'GET_RANDOM_DETAILS',
+    // });
+    console.log(this.props.store.randomDetails);
+  }
   render() {
     return (
-      <div className="container">
-        <h2></h2>
-
-        <div className="grid">
-          <div className="grid-col grid-col_8"></div>
-          <div className="grid-col grid-col_4">
-            {/* <RegisterForm /> */}
-
-            <center>
-              {/* <h4>Already a Member?</h4>
-              <button className="btn btn_sizeSm" onClick={this.onLogin}>
-                Login
-              </button> */}
-            </center>
-          </div>
-        </div>
-      </div>
+      <Grid container spacing={1} direction="row" justify="center">
+        <Grid item xs="12" style={{ textAlign: 'center' }}>
+          <p>
+            I need the recipe name {this.props.store.randomDetails.recipe_name}
+          </p>
+          <img
+            src={this.props.store.randomDetails.picture}
+            alt={this.props.store.randomDetails.recipe_name}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }

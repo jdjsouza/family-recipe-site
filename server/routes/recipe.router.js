@@ -24,7 +24,7 @@ router.get('/random', (req, res) => {
         .query(queryText, [randomID])
         .then((result) => {
           console.log(result.rows);
-          res.send(result.rows);
+          res.send(result.rows[0]);
         })
         .catch((err) => {
           console.log('Error getting random recipe details', err);

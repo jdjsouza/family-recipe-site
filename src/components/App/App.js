@@ -22,10 +22,12 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import BrowseCreator from '../BrowseCreator/BrowseCreator';
 
 import './App.css';
+import DishType from '../DishType/DishType';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
+    this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
   }
 
   render() {
@@ -50,6 +52,13 @@ class App extends Component {
               exact
               path="/creator"
               component={BrowseCreator}
+            />
+
+            <Route
+              // route to browse by creator
+              exact
+              path="/dishtype"
+              component={DishType}
             />
 
             {/* For protected routes, the view could show one of several things on the same route.

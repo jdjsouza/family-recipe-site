@@ -32,10 +32,10 @@ const Nav = (props) => {
         <Grid container spacing={1} direction="row" justify="center">
           <Grid
             item
-            xs="99"
-            sm="95"
-            md="94"
-            lg="93"
+            xs="9"
+            sm="5"
+            md="4"
+            lg="3"
             style={{ textAlign: 'center' }}
           >
             <Link className="nav-link" to="/home">
@@ -44,7 +44,7 @@ const Nav = (props) => {
             <Link className="nav-link" to="/creator">
               Creator |
             </Link>
-            <Link className="nav-link" to="/creator">
+            <Link className="nav-link" to="/dishtype">
               Dish Type |
             </Link>
             <Link className="nav-link" to={loginLinkData.path}>
