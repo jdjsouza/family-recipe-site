@@ -9,7 +9,7 @@
 .nav {
   margin: 0 0 30px;
   background-color: #dddddd;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 .nav-link {

@@ -15,11 +15,11 @@ router.get('/random', (req, res) => {
     .then((result) => {
       const randomID = Number(result.rows[0].id);
       console.log(randomID);
-      const queryText = `SELECT "recipes".*, array_agg("ingredients".ingredient || ' ' || "ingredients".quantity || ' ' || "units".unit) as "ingredients"
-      FROM "recipes", "ingredients", "units", "ingredients_units" 
+      const queryText = `SELECT "recipes".*, "user".first_name, array_agg("ingredients".ingredient || ' ' || "ingredients".quantity || ' ' || "units".unit) as "ingredients"
+      FROM "recipes", "ingredients", "units", "ingredients_units", "user"
       WHERE "recipes".id = $1 AND "ingredients".recipe_id = $1 AND "units".id = "ingredients_units".units_id
-      AND "ingredients_units".ingredients_id = "ingredients".id
-      GROUP BY "recipes".id;`;
+      AND "ingredients_units".ingredients_id = "ingredients".id AND "user".id = "recipes".user_id
+      GROUP BY "recipes".id, "user".first_name;`;
       pool
         .query(queryText, [randomID])
         .then((result) => {
