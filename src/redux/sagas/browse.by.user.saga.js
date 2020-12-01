@@ -6,7 +6,7 @@ function* getUsers(action) {
   try {
     const response = yield axios.get(`/api/recipe/user`);
     yield put({
-      type: 'SET_USERS',
+      type: 'SET_CREATORS',
       payload: response.data,
     });
   } catch (err) {
@@ -15,7 +15,7 @@ function* getUsers(action) {
 }
 
 function* getUsersSaga() {
-  yield takeLatest('GET_USERS', getUsers);
+  yield takeLatest('GET_CREATORS', getUsers);
 }
 
 export default getUsersSaga;

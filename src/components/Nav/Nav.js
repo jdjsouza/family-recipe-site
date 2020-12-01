@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 const Nav = (props) => {
   let loginLinkData = {
     path: '/login',
-    text: 'Login',
+    text: 'Login ',
   };
 
   if (props.store.user.id != null) {
@@ -30,43 +30,37 @@ const Nav = (props) => {
       </Button> */}
       <div className="nav-center">
         <Grid container spacing={1} direction="row" justify="center">
-          <Grid
-            item
-            xs="9"
-            sm="5"
-            md="4"
-            lg="3"
-            style={{ textAlign: 'center' }}
-          >
-            <Link className="nav-link" to="/home">
-              Home |
-            </Link>
-            <Link className="nav-link" to="/creator">
-              Creator |
-            </Link>
-            <Link className="nav-link" to="/dishtype">
-              Dish Type |
-            </Link>
-            <Link className="nav-link" to={loginLinkData.path}>
-              {/* Show this link if they are logged in or not,
+          {/* <div item style={{ margin: '0px 40px 0px 40px' }}>
+            {' '}
+          </div> */}
+          <Link item className="nav-link" to="/home">
+            Home |
+          </Link>
+          <Link item className="nav-link" to="/creator">
+            Creator |
+          </Link>
+          <Link item className="nav-link" to="/dishtype">
+            Dish Type |
+          </Link>
+          <Link item className="nav-link" to={loginLinkData.path}>
+            {/* Show this link if they are logged in or not,
           but call this link 'Home' if they are logged in,
           and call this link 'Login / Register' if they are not */}
-              {loginLinkData.text}
-            </Link>
-            {/* Show the link to the info page and the logout button if the user is logged in */}
-            {props.store.user.id && (
-              <>
-                <Link className="nav-link" to="/info">
-                  Info Page
-                </Link>
-                <LogOutButton className="nav-link" />
-              </>
-            )}
-            {/* Always show this link since the about page is not protected */}
-            {/* <Link className="nav-link" to="/about">
+            {loginLinkData.text}
+          </Link>
+          {/* Show the link to the info page and the logout button if the user is logged in */}
+          {props.store.user.id && (
+            <>
+              <Link item className="nav-link" to="/info">
+                Info Page
+              </Link>
+              <LogOutButton item className="nav-link" />
+            </>
+          )}
+          {/* Always show this link since the about page is not protected */}
+          {/* <Link className="nav-link" to="/about">
               About
             </Link> */}
-          </Grid>
         </Grid>
       </div>
     </div>

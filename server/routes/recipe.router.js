@@ -41,13 +41,13 @@ router.get('/random', (req, res) => {
 // URL: /api/recipe/user
 
 router.get('/user', (req, res) => {
-  const queryText = `SELECT "user"."firstName" FROM "user"
+  const queryText = `SELECT "user".first_name, "user".id FROM "user"
   WHERE EXISTS 
-  (SELECT "recipes".user_id from  "recipes" where "recipes".user_id = "user".id)
-  ORDER BY "user"."firstName" DESC;`;
+  (SELECT "recipes".user_id from "recipes" where "recipes".user_id = "user".id)`;
   pool
     .query(queryText)
     .then((result) => {
+      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((err) => {

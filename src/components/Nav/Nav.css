@@ -36,7 +36,7 @@
 } */
 
 .nav-center {
-  width: auto;
-  margin: 0;
-  text-align: center;
+  width: 100%;
+  margin: 0px;
+  /* text-align: center; */
 }

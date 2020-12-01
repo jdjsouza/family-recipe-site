@@ -28,6 +28,7 @@ class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
     this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
+    this.props.dispatch({ type: 'GET_CREATORS' });
   }
 
   render() {
