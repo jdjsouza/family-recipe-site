@@ -1,0 +1,9 @@
+.food-image {
+  max-height: 600px;
+}
+
+.instructions {
+  padding-bottom: 100px;
+  text-align: justify;
+  text-justify: inter-word;
+}

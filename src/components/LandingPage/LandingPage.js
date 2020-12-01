@@ -52,6 +52,7 @@ class LandingPage extends Component {
         </Grid>
         <Grid item xs="8" style={{ textAlign: 'center' }}>
           <img
+            className="food-image"
             src={this.props.store.randomDetails.picture}
             alt={this.props.store.randomDetails.recipe_name}
           />
@@ -60,7 +61,7 @@ class LandingPage extends Component {
           <p>{this.props.store.randomDetails.brief_description}</p>
         </Grid>
         <Grid container spacing={0} direction="row" justify="center">
-          <Grid item xs="4" sm="3">
+          <Grid item xs="8" sm="4">
             <div style={{ float: 'right' }}>
               Prep Time: {this.props.store.randomDetails.prep_time}
             </div>
@@ -70,8 +71,8 @@ class LandingPage extends Component {
             </ul>
           </Grid>
         </Grid>
-        <Grid item xs="10" style={{ textAlign: 'center' }}>
-          <div style={{ overflow: 'visible' }}>
+        <Grid item xs="10">
+          <div className="instructions">
             {this.props.store.randomDetails.instructions}
           </div>
         </Grid>

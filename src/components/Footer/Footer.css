@@ -5,12 +5,11 @@ footer {
 
 .nav-btm {
   background-color: #dddddd;
-  overflow: scroll;
+  overflow: hidden;
   position: fixed;
   bottom: 0;
   width: 100%;
   text-align: center;
-  margin-top: 10px;
 }
 
 .btm-nav-link {
