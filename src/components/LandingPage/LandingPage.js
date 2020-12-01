@@ -12,14 +12,19 @@ class LandingPage extends Component {
     // this.props.dispatch({
     //   type: 'GET_RANDOM_DETAILS',
     // });
-    console.log(this.props.store.randomDetails);
+    console.log(this.props.store.randomDetails.ingredients);
   }
   render() {
-    const ingredientList = this.props.store.randomDetails.ingredients.map(
-      (item, index) => {
-        return <li key={index}>{item} </li>;
-      }
-    );
+    let ingredientList;
+    if (this.props.store.randomDetails.ingredients === undefined) {
+      ingredientList = `<li key="1">Loading...</li>`;
+    } else {
+      ingredientList = this.props.store.randomDetails.ingredients.map(
+        (item, index) => {
+          return <li key={index}>{item} </li>;
+        }
+      );
+    }
     let updated;
     let posted;
     if (this.props.store.randomDetails.date_updated != null) {
