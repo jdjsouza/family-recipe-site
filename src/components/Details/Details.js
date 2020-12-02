@@ -4,6 +4,7 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // Import @material-UI
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
 class Details extends Component {
   componentDidMount() {
@@ -55,45 +56,66 @@ class Details extends Component {
         />
       );
     }
-
     return (
-      <Grid container spacing={1} direction="row" justify="center">
-        <Grid item xs={10} style={{ textAlign: 'center' }}>
-          <h2 item xs={4} wrap="wrap" className="recipe-title">
-            {this.props.store.recipeDetails.recipe_name}
-          </h2>
-        </Grid>
-        <Grid item xs={10} style={{ textAlign: 'center' }}>
-          <span item wrap="wrap">
-            Creator: {this.props.store.recipeDetails.first_name} Posted:{' '}
-            {posted} {updated}
-          </span>
-        </Grid>
-        <Grid item xs={8} style={{ textAlign: 'center' }}>
-          {image}
-        </Grid>
-        <Grid item xs={10} style={{ textAlign: 'center' }}>
-          <p item>{this.props.store.recipeDetails.brief_description}</p>
-        </Grid>
+      <div className="container">
         <Grid container spacing={1} direction="row" justify="center">
-          <Grid item xs={4}>
-            <div item>
-              Prep Time: {this.props.store.recipeDetails.prep_time}
-            </div>
-            <div item>
-              Cook Time: {this.props.store.recipeDetails.cook_time}
-            </div>
-            <ul item style={{ listStyleType: 'none' }}>
-              {ingredientList}
-            </ul>
+          <Grid item xs={12} style={{ textAlign: 'center' }}>
+            <h2 item xs={4} wrap="wrap" className="recipe-title">
+              {this.props.store.recipeDetails.recipe_name}
+            </h2>
+          </Grid>
+          <Grid item xs={12} style={{ textAlign: 'center' }}>
+            <span item wrap="wrap">
+              Creator: {this.props.store.recipeDetails.first_name} Posted:{' '}
+              {posted} {updated}
+            </span>
+          </Grid>
+          <Grid item xs={8}>
+            {image}
+          </Grid>
+          <Grid item xs={7}>
+            <Box>
+              <p style={{ textAlign: 'center' }}>
+                {this.props.store.recipeDetails.brief_description}
+              </p>
+            </Box>
+          </Grid>
+
+          <Grid
+            container
+            item
+            xs={12}
+            spacing={4}
+            direction="row"
+            justify="center"
+          >
+            <Grid item>
+              <Box pb={2} mb={2} borderBottom={1} pt={2} borderTop={1}>
+                <div>Prep Time: {this.props.store.recipeDetails.prep_time}</div>
+                <div>Cook Time: {this.props.store.recipeDetails.cook_time}</div>
+              </Box>
+              <Box mb={3}>
+                <ul
+                  item
+                  style={{ listStyleType: 'none', margin: '0', padding: '0' }}
+                >
+                  {ingredientList}
+                </ul>
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={7}>
+              <Box pt={2} borderTop={1}>
+                <div
+                  className="instructions"
+                  style={{ whiteSpace: 'pre-wrap' }}
+                >
+                  {this.props.store.recipeDetails.instructions}
+                </div>
+              </Box>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={10}>
-          <div className="instructions" style={{ whiteSpace: 'pre-wrap' }}>
-            {this.props.store.recipeDetails.instructions}
-          </div>
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 }
