@@ -20,15 +20,18 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import BrowseCreator from '../BrowseCreator/BrowseCreator';
+import DishType from '../DishType/DishType';
+import AllBy from '../AllBy/AllBy';
 
 import './App.css';
-import DishType from '../DishType/DishType';
+import ByDishType from '../ByDishType/ByDishType';
 
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
     this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
     this.props.dispatch({ type: 'GET_CREATORS' });
+    this.props.dispatch({ type: 'GET_DISH_TYPES' });
   }
 
   render() {
@@ -58,8 +61,22 @@ class App extends Component {
             <Route
               // route to browse by creator
               exact
+              path="/creator_dishes/:id"
+              component={AllBy}
+            />
+
+            <Route
+              // route to browse by dish type
+              exact
               path="/dishtype"
               component={DishType}
+            />
+
+            <Route
+              // route to browse dishes by type
+              exact
+              path="/typeofdish/:id"
+              component={ByDishType}
             />
 
             {/* For protected routes, the view could show one of several things on the same route.

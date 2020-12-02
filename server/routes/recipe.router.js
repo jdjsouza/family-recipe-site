@@ -78,13 +78,13 @@ router.get('/user/:id', (req, res) => {
 // URL: /api/recipe/dish/
 
 router.get('/dish', (req, res) => {
-  const queryText = `SELECT "type_of_dish".dish_types FROM "type_of_dish"
+  const queryText = `SELECT "type_of_dish".dish_types, "type_of_dish".id FROM "type_of_dish"
   WHERE EXISTS 
-  (SELECT "recipe_dish".dish_id from "recipe_dish" where "recipe_dish".dish_id = "type_of_dish".id)
-  ORDER BY "type_of_dish".id ASC;`;
+  (SELECT "recipe_dish".dish_id from "recipe_dish" where "recipe_dish".dish_id = "type_of_dish".id);`;
   pool
     .query(queryText)
     .then((result) => {
+      console.log('in dish', result.rows);
       res.send(result.rows);
     })
     .catch((err) => {

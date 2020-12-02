@@ -4,9 +4,9 @@ import axios from 'axios';
 // START GET for browsing by dish type
 function* getByDishType(action) {
   try {
-    const response = yield axios.get(`/api/recipe/dish`);
+    const response = yield axios.get(`/api/recipe/dish/:id`);
     yield put({
-      type: 'SET_BY_DISH_TYPES',
+      type: 'SET_BY_DISH_TYPE',
       payload: response.data,
     });
   } catch (err) {

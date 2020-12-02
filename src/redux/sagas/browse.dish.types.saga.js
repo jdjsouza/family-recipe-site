@@ -5,6 +5,7 @@ import axios from 'axios';
 function* getDishTypes(action) {
   try {
     const response = yield axios.get(`/api/recipe/dish`);
+    console.log('SAGA', response);
     yield put({
       type: 'SET_DISH_TYPES',
       payload: response.data,

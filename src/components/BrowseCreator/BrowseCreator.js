@@ -13,9 +13,13 @@ class BrowseCreator extends Component {
     console.log(this.props.store.theCreators);
   }
 
+  //   /api/recipe/user/:id
   handleClickCreator = (id) => (event) => {
     console.log(id);
-    this.props.history.push(``);
+    this.props.dispatch({
+      type: 'GET_BY_USER',
+    });
+    this.props.history.push(`/creator_dishes/${id}`);
   };
 
   render() {
