@@ -6,6 +6,7 @@ import randomDetails from './random.recipe.reducer';
 import theCreators from './browse.by.user.reducer';
 import theDishTypes from './browse.dish.types.reducer';
 import theDishes from './get.by.dish.reducer';
+import byUser from './get.by.user.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   theCreators, // contains the list of people who've created recipes for browsing by
   theDishTypes, // contains the list of types of dishes with recipes associated
   theDishes, // contains the list of recipes by dish type
+  byUser, // contains the list of recipes by a specific person
 });
 
 export default rootReducer;

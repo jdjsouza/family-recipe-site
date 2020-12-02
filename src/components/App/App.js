@@ -32,6 +32,7 @@ class App extends Component {
     this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
     this.props.dispatch({ type: 'GET_CREATORS' });
     this.props.dispatch({ type: 'GET_DISH_TYPES' });
+    this.props.dispatch({ type: 'GET_BY_USER' });
   }
 
   render() {
