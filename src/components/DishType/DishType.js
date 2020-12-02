@@ -14,7 +14,7 @@ class BrowseDishType extends Component {
   }
 
   handleClickDishType = (id) => (event) => {
-    console.log(id);
+    console.log('Dish Type Dispatch', id);
     this.props.dispatch({
       type: 'GET_BY_DISH_TYPES',
     });

@@ -25,6 +25,7 @@ import AllBy from '../AllBy/AllBy';
 
 import './App.css';
 import ByDishType from '../ByDishType/ByDishType';
+import Details from '../Details/Details';
 
 class App extends Component {
   componentDidMount() {
@@ -32,7 +33,6 @@ class App extends Component {
     this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
     this.props.dispatch({ type: 'GET_CREATORS' });
     this.props.dispatch({ type: 'GET_DISH_TYPES' });
-    this.props.dispatch({ type: 'GET_BY_USER' });
   }
 
   render() {
@@ -64,6 +64,13 @@ class App extends Component {
               exact
               path="/creator_dishes/:id"
               component={AllBy}
+            />
+
+            <Route
+              // route to browse dishes by type
+              exact
+              path="/details/:id"
+              component={Details}
             />
 
             <Route

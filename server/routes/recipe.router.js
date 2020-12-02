@@ -97,6 +97,7 @@ router.get('/dish', (req, res) => {
 // URL: /api/recipe/dish/:id
 
 router.get('/dish/:id', (req, res) => {
+  console.log('req params', req.params);
   const queryText = `SELECT "recipes".id, "recipes".recipe_name, "recipes".picture, "recipes".brief_description, "recipe_dish".dish_id 
   FROM recipes, recipe_dish
   WHERE "recipe_dish".recipe_id = "recipes".id AND "recipe_dish".dish_id = $1
