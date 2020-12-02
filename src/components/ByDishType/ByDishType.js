@@ -42,7 +42,9 @@ class ByDishType extends Component {
       );
     } else {
       recipeList = this.props.store.theDishes.map((item, index) => {
-        let recipeImage = '';
+        let recipeImage = (
+          <div className="small-food-image-placeholder small-food-image"></div>
+        );
         if (this.props.store.theDishes[index].picture != '') {
           recipeImage = (
             <img
@@ -56,14 +58,9 @@ class ByDishType extends Component {
         return (
           <li item style={{ textAlign: 'center' }} key={index}>
             <h3 onClick={this.handleClickRecipe(item.id)} item>
-              <Grid
-                container
-                spacing={1}
-                // direction="row"
-                // justify="center"
-                alignContent="baseline"
-              >
-                {recipeImage} {item.recipe_name}
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>{recipeImage}</Grid>
+                <Grid item>{item.recipe_name}</Grid>
               </Grid>
             </h3>
           </li>
@@ -75,9 +72,7 @@ class ByDishType extends Component {
         <h2 style={{ textAlign: 'center' }}>All {dish} dishes</h2>
         <Grid container spacing={1} direction="row" justify="center">
           <Grid item>
-            <ul item style={{ listStyleType: 'none' }}>
-              {recipeList}
-            </ul>
+            <ul style={{ listStyleType: 'none' }}>{recipeList}</ul>
           </Grid>
         </Grid>
       </div>

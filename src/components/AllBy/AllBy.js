@@ -44,7 +44,9 @@ class AllBy extends Component {
       );
     } else {
       recipeList = this.props.store.byUser.map((item, index) => {
-        let recipeImage = '';
+        let recipeImage = (
+          <div className="small-food-image-placeholder small-food-image"></div>
+        );
         if (this.props.store.byUser[index].picture != '') {
           recipeImage = (
             <img
@@ -58,14 +60,9 @@ class AllBy extends Component {
         return (
           <li item style={{ textAlign: 'center' }} key={index}>
             <h3 onClick={this.handleClickRecipe(item.id)} item>
-              <Grid
-                container
-                spacing={1}
-                // direction="row"
-                // justify="center"
-                alignContent="baseline"
-              >
-                {recipeImage} {item.recipe_name}
+              <Grid container spacing={2} alignItems="center">
+                <Grid item>{recipeImage}</Grid>
+                <Grid item>{item.recipe_name}</Grid>
               </Grid>
             </h3>
           </li>
@@ -76,10 +73,8 @@ class AllBy extends Component {
       <div>
         <h2 style={{ textAlign: 'center' }}>Dishes by {creator}</h2>
         <Grid container spacing={1} direction="row" justify="center">
-          <Grid xs={8} item>
-            <ul item style={{ listStyleType: 'none' }}>
-              {recipeList}
-            </ul>
+          <Grid item>
+            <ul style={{ listStyleType: 'none' }}>{recipeList}</ul>
           </Grid>
         </Grid>
       </div>

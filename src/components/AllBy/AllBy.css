@@ -2,3 +2,8 @@
   max-height: 150px;
   width: 200px;
 }
+
+.small-food-image-placeholder {
+  height: 150px;
+  background-color: rgba(112, 128, 144, 0.927);
+}

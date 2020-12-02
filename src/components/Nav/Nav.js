@@ -16,8 +16,8 @@ const Nav = (props) => {
   };
 
   if (props.store.user.id != null) {
-    loginLinkData.path = '/user';
-    loginLinkData.text = 'Home';
+    loginLinkData.path = '/add-new';
+    loginLinkData.text = 'Add Recipe |';
   }
 
   return (
@@ -51,9 +51,6 @@ const Nav = (props) => {
           {/* Show the link to the info page and the logout button if the user is logged in */}
           {props.store.user.id && (
             <>
-              <Link item className="nav-link" to="/info">
-                Info Page
-              </Link>
               <LogOutButton item className="nav-link" />
             </>
           )}

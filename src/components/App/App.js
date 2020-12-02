@@ -30,7 +30,7 @@ import Details from '../Details/Details';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
-    this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
+    // this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
     this.props.dispatch({ type: 'GET_CREATORS' });
     this.props.dispatch({ type: 'GET_DISH_TYPES' });
   }
@@ -38,7 +38,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="mainContent">
           <Nav />
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
@@ -87,17 +87,6 @@ class App extends Component {
               component={ByDishType}
             />
 
-            {/* For protected routes, the view could show one of several things on the same route.
-            Visiting localhost:3000/user will show the UserPage if the user is logged in.
-            If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
-            Even though it seems like they are different pages, the user is always on localhost:3000/user */}
-            <ProtectedRoute
-              // logged in shows UserPage else shows LoginPage
-              exact
-              path="/user"
-              component={UserPage}
-            />
-
             <ProtectedRoute
               // logged in shows InfoPage else shows LoginPage
               exact
@@ -115,7 +104,7 @@ class App extends Component {
               exact
               path="/login"
               component={LoginPage}
-              authRedirect="/user"
+              authRedirect="/home"
             />
             <ProtectedRoute
               // with authRedirect:
@@ -124,16 +113,15 @@ class App extends Component {
               exact
               path="/registration"
               component={RegisterPage}
-              authRedirect="/user"
+              authRedirect="/home"
             />
-            <ProtectedRoute
+            <Route
               // with authRedirect:
               // - if logged in, redirects to "/user"
               // - else shows LandingPage at "/home"
               exact
               path="/home"
               component={LandingPage}
-              authRedirect="/user"
             />
 
             {/* If none of the other routes matched, we will show a 404. */}

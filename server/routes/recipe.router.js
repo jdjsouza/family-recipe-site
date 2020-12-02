@@ -142,7 +142,7 @@ router.get('/details/:id', (req, res) => {
   pool
     .query(queryText, [req.params.id])
     .then((result) => {
-      res.send(result.rows);
+      res.send(result.rows[0]);
     })
     .catch((err) => {
       console.log('Error getting recipe details', err);
