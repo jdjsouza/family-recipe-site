@@ -26,6 +26,7 @@ import AllBy from '../AllBy/AllBy';
 import './App.css';
 import ByDishType from '../ByDishType/ByDishType';
 import Details from '../Details/Details';
+import AddRecipe from '../AddRecipe/AddRecipe';
 
 class App extends Component {
   componentDidMount() {
@@ -78,6 +79,13 @@ class App extends Component {
               exact
               path="/dishtype"
               component={DishType}
+            />
+
+            <Route
+              // route to browse by dish type
+              exact
+              path="/add-new"
+              component={AddRecipe}
             />
 
             <Route

@@ -42,9 +42,7 @@ class BrowseDishType extends Component {
         <h2 className="browseByTitle">Browse by Type of Dish</h2>
         <Grid container spacing={1} direction="row" justify="center">
           <Grid item>
-            <ul item style={{ listStyleType: 'none' }}>
-              {dishList}
-            </ul>
+            <ul style={{ listStyleType: 'none' }}>{dishList}</ul>
           </Grid>
         </Grid>
       </div>
