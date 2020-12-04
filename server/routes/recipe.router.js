@@ -114,6 +114,24 @@ router.get('/dish/:id', (req, res) => {
     });
 });
 
+// GET all the units and unit ID's from the units table
+// URL: /api/recipe/units
+
+router.get('/units', (req, res) => {
+  console.log('units', req.params);
+  const queryText = `SELECT * from "units";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting units', err);
+      res.sendStatus(500);
+    });
+});
+
 // Get all recipes (name, pic, brief_desc) with an ingredient specified in the search bar
 
 // router.get('/', (req, res) => {

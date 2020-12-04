@@ -14,7 +14,6 @@ import Footer from '../Footer/Footer';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
@@ -31,7 +30,6 @@ import AddRecipe from '../AddRecipe/AddRecipe';
 class App extends Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' });
-    // this.props.dispatch({ type: 'GET_RANDOM_DETAILS' });
     this.props.dispatch({ type: 'GET_CREATORS' });
     this.props.dispatch({ type: 'GET_DISH_TYPES' });
   }
@@ -44,6 +42,15 @@ class App extends Component {
           <Switch>
             {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
             <Redirect exact from="/" to="/home" />
+
+            <Route
+              // with authRedirect:
+              // - if logged in, redirects to "/user"
+              // - else shows LandingPage at "/home"
+              exact
+              path="/home"
+              component={LandingPage}
+            />
 
             {/* Visiting localhost:3000/about will show the about page. */}
             <Route
@@ -122,14 +129,6 @@ class App extends Component {
               path="/registration"
               component={RegisterPage}
               authRedirect="/home"
-            />
-            <Route
-              // with authRedirect:
-              // - if logged in, redirects to "/user"
-              // - else shows LandingPage at "/home"
-              exact
-              path="/home"
-              component={LandingPage}
             />
 
             {/* If none of the other routes matched, we will show a 404. */}

@@ -16,7 +16,7 @@ class LandingPage extends Component {
   render() {
     let ingredientList;
     if (this.props.store.randomDetails.ingredients === undefined) {
-      ingredientList = `<li key="1">Loading...</li>`;
+      ingredientList = <li key="1">Loading...</li>;
     } else {
       ingredientList = this.props.store.randomDetails.ingredients.map(
         (item, index) => {
