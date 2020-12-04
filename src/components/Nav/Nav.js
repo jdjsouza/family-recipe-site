@@ -7,7 +7,6 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // Import @material-UI
 import Grid from '@material-ui/core/Grid';
-// import Link from '@material-ui/core/Link';
 
 const Nav = (props) => {
   let loginLinkData = {
@@ -33,7 +32,12 @@ const Nav = (props) => {
           {/* <div item style={{ margin: '0px 40px 0px 40px' }}>
             {' '}
           </div> */}
-          <Link item className="nav-link" to="/home">
+          <Link
+            onClick={() => props.dispatch({ type: 'GET_RANDOM_DETAILS' })}
+            item
+            className="nav-link"
+            to="/home"
+          >
             Home |
           </Link>
           <Link item className="nav-link" to="/creator">
