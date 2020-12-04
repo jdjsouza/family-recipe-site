@@ -3,7 +3,13 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // Material-UI Imports
-import { Grid, TextField, Box } from '@material-ui/core';
+import {
+  Grid,
+  Box,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+} from '@material-ui/core';
 
 class AddRecipe extends Component {
   state = {
@@ -15,6 +21,7 @@ class AddRecipe extends Component {
       brief_description: '',
       instructions: '',
       user_id: '',
+      dish_id: [],
       materials: [
         {
           ingredient: '',
@@ -23,13 +30,17 @@ class AddRecipe extends Component {
         },
       ],
     },
+    // data: ['Breakfast', 'Lunch', 'Dinner', 'Snack', 'Side Dish', 'Dessert'],
   };
 
   componentDidMount() {
     this.props.dispatch({
       type: 'GET_UNITS',
     });
-    console.log(this.props.store.theUnits);
+    this.props.dispatch({
+      type: 'GET_DISH_LIST',
+    });
+    console.log('in add recipe', this.props.store.theUnits);
   }
 
   handleSelect = (event) => {
@@ -39,17 +50,14 @@ class AddRecipe extends Component {
     // });
   };
 
+  handleCheckbox = (event) => {
+    this.setState({
+      dish_id: [],
+    });
+    console.log(this.props.store.theDisheList);
+  };
+
   render() {
-    // let units;
-    // if (this.props.store.theUnits === undefined) {
-    //   units = <option value="loading">Loading...</option>;
-    // } else {
-    //   units = this.props.store.theUnits.map((item, index) => {
-    //     <option key={index} value={item.id}>
-    //       {item.unit}
-    //     </option>;
-    //   });
-    // }
     return (
       <div>
         <h2 style={{ textAlign: 'center' }}>Add a new Recipe!</h2>
@@ -75,7 +83,54 @@ class AddRecipe extends Component {
               </Grid>
             </Grid>
           </div>
-          {/* BUTTON TO ADD MORE INGREDIENT LINES */}
+          <div>{/* BUTTON TO ADD MORE INGREDIENT LINES */}</div>
+          <div>
+            <Grid container spacing={1} direction="row" justify="center">
+              <Grid item>
+                {this.props.store.theDishList.map((item, index) => (
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        key={index.toString()}
+                        onChange={this.handleCheckbox}
+                        name="checked"
+                        color="primary"
+                      />
+                    }
+                    label={item.dish_types}
+                  />
+                ))}
+              </Grid>
+            </Grid>
+          </div>
+          <div>
+            <Grid
+              xs={12}
+              container
+              spacing={1}
+              direction="row"
+              justify="center"
+            >
+              <Grid item>
+                <textarea
+                  className="brief-desc"
+                  placeholder="Brief Description"
+                  type="text"
+                  rows="4"
+                  cols
+                />
+              </Grid>
+              <Grid item>
+                <textarea
+                  className="cook-instruct"
+                  placeholder="Cooking Instructions"
+                  type="text"
+                  rows="4"
+                  cols
+                />
+              </Grid>
+            </Grid>
+          </div>
         </div>
       </div>
     );
@@ -83,4 +138,3 @@ class AddRecipe extends Component {
 }
 
 export default connect(mapStoreToProps)(AddRecipe);
-0;

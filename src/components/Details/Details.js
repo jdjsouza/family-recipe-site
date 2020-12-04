@@ -17,7 +17,7 @@ class Details extends Component {
   render() {
     let ingredientList;
     if (this.props.store.recipeDetails.ingredients === undefined) {
-      ingredientList = `<li key="1">Loading...</li>`;
+      ingredientList = <li key="1">Loading...</li>;
     } else {
       ingredientList = this.props.store.recipeDetails.ingredients.map(
         (item, index) => {

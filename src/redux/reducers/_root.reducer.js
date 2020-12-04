@@ -8,6 +8,7 @@ import theDishTypes from './browse.dish.types.reducer';
 import theDishes from './get.by.dish.reducer';
 import byUser from './get.by.user.reducer';
 import theUnits from './get.units.reducer';
+import theDishList from './get.dish.list.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   theDishes, // contains the list of recipes by dish type
   byUser, // contains the list of recipes by a specific person
   theUnits, // contains the list of units of measurement
+  theDishList, // contains the list of dish types
 });
 
 export default rootReducer;

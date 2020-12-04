@@ -132,6 +132,24 @@ router.get('/units', (req, res) => {
     });
 });
 
+// GET all of the dish_types and ID's from the type_of_dish table
+// URL: /api/recipe/dish-types
+
+router.get('/dish-types', (req, res) => {
+  console.log('units', req.params);
+  const queryText = `SELECT * from "type_of_dish";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting units', err);
+      res.sendStatus(500);
+    });
+});
+
 // Get all recipes (name, pic, brief_desc) with an ingredient specified in the search bar
 
 // router.get('/', (req, res) => {
