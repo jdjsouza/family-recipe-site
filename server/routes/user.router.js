@@ -14,9 +14,62 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   res.send(req.user);
 });
 
-// UPDATE POST to include firstName, lastName, emailAddress
-// Have to change the register user page to only load for admin
-// And send a link for first sign in/create || change password
+// Create GET for Admin Page to use
+// url /api/user/access
+router.get('/access', rejectUnauthenticated, (req, res) => {
+  console.log('User Access levels', req.params);
+  const queryText = `SELECT "id", "username", "first_name", "last_name", "email", "access_level" FROM "user";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting units', err);
+      res.sendStatus(500);
+    });
+});
+
+// Create Delete for deleting a requested account
+router.delete('/del/:id', rejectUnauthenticated, (req, res) => {
+  console.log('Delete route', req.params.id);
+  console.log('Access Level', req.user);
+  if (req.user.access_level === 0) {
+    pool
+      .query('DELETE FROM "user" WHERE id=$1', [req.params.id])
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log('Error DELETE', error);
+        res.sendStatus(500);
+      });
+    return;
+  }
+  res.sendStatus(403);
+});
+
+// Create PUT for authorizing a new user
+router.put('/update/:id', rejectUnauthenticated, (req, res) => {
+  console.log('Update route', req.params.id);
+  console.log('Access Level', req.user);
+  if (req.user.access_level === 0) {
+    pool
+      .query('UPDATE "user" SET access_level = 1 WHERE "user".id=$1;', [
+        req.params.id,
+      ])
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        console.log('Error Update', error);
+        res.sendStatus(500);
+      });
+    return;
+  }
+  res.sendStatus(403);
+});
 
 // Handles POST request with new user data
 // The only thing different from this and every other post we've seen

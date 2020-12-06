@@ -21,11 +21,12 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import BrowseCreator from '../BrowseCreator/BrowseCreator';
 import DishType from '../DishType/DishType';
 import AllBy from '../AllBy/AllBy';
-
-import './App.css';
 import ByDishType from '../ByDishType/ByDishType';
 import Details from '../Details/Details';
 import AddRecipe from '../AddRecipe/AddRecipe';
+import AdminPage from '../AdminPage/AdminPage';
+
+import './App.css';
 
 class App extends Component {
   componentDidMount() {
@@ -107,6 +108,13 @@ class App extends Component {
               exact
               path="/info"
               component={InfoPage}
+            />
+
+            <ProtectedRoute
+              // logged in shows InfoPage else shows LoginPage
+              exact
+              path="/admin"
+              component={AdminPage}
             />
 
             {/* When a value is supplied for the authRedirect prop the user will
