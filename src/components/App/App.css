@@ -6,7 +6,7 @@ body,
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0px;
+  margin: 0;
   background-color: #f6f1e2;
 }
 
@@ -121,11 +121,35 @@ input {
 }
 
 .brief-desc {
-  width: 1000px;
+  width: 100%;
   height: 80px;
 }
 
 .cook-instruct {
-  width: 1000px;
+  width: 100%;
   height: 300px;
+}
+
+/* --------------------------------------------------------------------------------
+Image sizes and Placeholders
+-------------------------------------------------------------------------------- */
+
+.small-food-image {
+  max-height: 150px;
+  width: 200px;
+}
+
+.small-food-image-placeholder {
+  height: 150px;
+  background-color: rgba(112, 128, 144, 0.927);
+}
+
+.medium-food-image {
+  max-height: 300px;
+  width: 400px;
+}
+
+.medium-food-image-placeholder {
+  height: 300px;
+  background-color: rgba(112, 128, 144, 0.927);
 }
