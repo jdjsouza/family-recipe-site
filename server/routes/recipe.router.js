@@ -190,6 +190,10 @@ router.get('/details/:id', (req, res) => {
 // URL: /api/recipe/
 
 router.post('/', rejectUnauthenticated, (req, res) => {
+  if (req.user.access_level === 2) {
+    res.sendStatus(403);
+    return;
+  }
   try {
     console.log(req.body);
     // RETURNING "id" will give us back the id of the created recipe

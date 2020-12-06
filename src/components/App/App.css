@@ -33,7 +33,7 @@ Button
   border-color: #014041;
   border-width: 1px 1px 3px;
   border-radius: 4px;
-  background-color: rgb(73, 73, 233);
+  background-color: rgb(112, 128, 144);
   color: #f8f8f8;
   font-size: 1.1rem;
   outline: 0;
@@ -56,7 +56,7 @@ Button
 }
 
 .btn:hover {
-  background-color: #008183;
+  background-color: rgb(155, 172, 189);
   text-decoration: none;
 }
 

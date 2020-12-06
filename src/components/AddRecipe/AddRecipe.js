@@ -150,11 +150,13 @@ class AddRecipe extends Component {
           <Grid container spacing={1} direction="row" justify="center">
             <Grid item>
               <input
+                key="1"
                 placeholder="Prep Time"
                 type="number"
                 onChange={this.handleChangeFor('prep_time')}
               />
               <input
+                key="2"
                 placeholder="Cook Time"
                 type="number"
                 onChange={this.handleChangeFor('cook_time')}

@@ -14,9 +14,15 @@ const Nav = (props) => {
     text: 'Login ',
   };
 
-  if (props.store.user.id != null) {
+  if (props.store.user.id != null && props.store.user.access_level !== 2) {
     loginLinkData.path = '/add-new';
     loginLinkData.text = 'Add Recipe |';
+  } else if (
+    props.store.user.id != null &&
+    props.store.user.access_level === 2
+  ) {
+    loginLinkData.path = '/home';
+    loginLinkData.text = 'Account Pending |';
   }
 
   return (
