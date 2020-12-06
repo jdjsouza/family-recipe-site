@@ -146,7 +146,7 @@ Image sizes and Placeholders
 
 .medium-food-image {
   max-height: 300px;
-  width: 400px;
+  max-width: 400px;
 }
 
 .medium-food-image-placeholder {
