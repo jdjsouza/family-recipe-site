@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
-import './AllBy.css';
 
 // import @material-ui
 import Grid from '@material-ui/core/Grid';

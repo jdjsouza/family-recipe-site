@@ -41,7 +41,9 @@ class LandingPage extends Component {
       const postedDay = date_posted.substring(8, 10);
       posted = postedMonth + '/' + postedDay + '/' + postedYear;
     }
-    let image = '';
+    let image = (
+      <div className="medium-food-image-placeholder medium-food-image"></div>
+    );
     if (this.props.store.randomDetails.picture != '') {
       image = (
         <img
@@ -65,7 +67,7 @@ class LandingPage extends Component {
               {posted} {updated}
             </span>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={8} align="center">
             {image}
           </Grid>
           <Grid item xs={7}>

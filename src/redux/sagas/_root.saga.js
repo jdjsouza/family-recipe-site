@@ -11,6 +11,9 @@ import registrationSaga from './registration.saga';
 import userSaga from './user.saga';
 import getUnitsSaga from './get.units.saga';
 import getDishList from './get.dish.list.saga';
+import getAccessSaga from './user.access.saga';
+import delUserSaga from './user.delete.saga';
+import updateUserSaga from './user.approve.saga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -33,5 +36,8 @@ export default function* rootSaga() {
     getByDishTypeSaga(),
     getUnitsSaga(),
     getDishList(),
+    getAccessSaga(),
+    delUserSaga(),
+    updateUserSaga(),
   ]);
 }

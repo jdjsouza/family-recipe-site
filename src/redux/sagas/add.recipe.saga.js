@@ -3,10 +3,8 @@ import axios from 'axios';
 
 function* addRecipe(action) {
   try {
+    console.log(action.payload);
     yield axios.post(`/api/recipe`, action.payload);
-    yield put({
-      type: 'GET_RECIPE_DETAILS',
-    });
   } catch (err) {
     console.log(err);
   }

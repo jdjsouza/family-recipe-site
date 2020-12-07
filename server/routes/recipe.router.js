@@ -190,6 +190,10 @@ router.get('/details/:id', (req, res) => {
 // URL: /api/recipe/
 
 router.post('/', rejectUnauthenticated, (req, res) => {
+  if (req.user.access_level === 2) {
+    res.sendStatus(403);
+    return;
+  }
   try {
     console.log(req.body);
     // RETURNING "id" will give us back the id of the created recipe
@@ -204,8 +208,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
       .query(insertRecipeQuery, [
         req.body.recipe_name,
         req.body.picture,
-        req.body.prep_time,
-        req.body.cook_time,
+        parseInt(req.body.prep_time),
+        parseInt(req.body.cook_time),
         req.body.brief_description,
         req.body.instructions,
         req.body.user_id,
@@ -227,7 +231,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             // pushing pool.query into this array for the Promise.all
             pool.query(insertRecipeDishQuery, [
               createdRecipeId,
-              req.body.dish_id[i],
+              parseInt(req.body.dish_id[i]),
             ])
           );
         }
@@ -247,7 +251,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
             pool.query(insertRecipeDishQuery, [
               createdRecipeId,
               req.body.materials[i].ingredient,
-              req.body.materials[i].quantity,
+              parseInt(req.body.materials[i].quantity),
             ])
           );
         }
@@ -256,21 +260,23 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         Promise.all(allIngredients) // .then .catch
           .then((resultList) => {
             let ingredientUnit = [];
-            console.log(resultList);
+            console.log('end third query', resultList, resultList.length);
 
             for (let i = 0; i < resultList.length; i++) {
+              console.log('Fourth Query New Recipe Id:', result.rows[0].id); //ID IS HERE!
               const createdIngredientId = resultList[i].rows[0].id;
               const insertUnitQuery = `
-      INSERT INTO "ingredients_units" ("units_id", "ingredients_id")
-      VALUES  ($1, $2);`;
+              INSERT INTO "ingredients_units" ("units_id", "ingredients_id")
+              VALUES  ($1, $2);`;
 
               ingredientUnit.push(
                 pool.query(insertUnitQuery, [
-                  req.body.materials[i].unit_id,
+                  parseInt(req.body.materials[i].unit_id),
                   createdIngredientId,
                 ])
               );
             }
+            console.log('Fourth Query For Loop', ingredientUnit);
             Promise.all(ingredientUnit).then((result) => {
               res.sendStatus(201);
             });
