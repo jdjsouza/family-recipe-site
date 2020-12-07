@@ -80,7 +80,7 @@ router.get('/user/:id', (req, res) => {
 router.get('/dish', (req, res) => {
   const queryText = `SELECT "type_of_dish".dish_types, "type_of_dish".id FROM "type_of_dish"
   WHERE EXISTS 
-  (SELECT "recipe_dish".dish_id from "recipe_dish" where "recipe_dish".dish_id = "type_of_dish".id);`;
+  (SELECT "recipe_dish".dish_id from "recipe_dish" where "recipe_dish".dish_id = "type_of_dish".id) ORDER BY "type_of_dish".id ASC;`;
   pool
     .query(queryText)
     .then((result) => {

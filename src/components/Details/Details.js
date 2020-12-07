@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
 
 // Import @material-UI
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
+import { Grid, Box, Button } from '@material-ui/core/';
 
 class Details extends Component {
   componentDidMount() {
@@ -82,7 +81,6 @@ class Details extends Component {
               </p>
             </Box>
           </Grid>
-
           <Grid
             container
             item
