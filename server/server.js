@@ -1,4 +1,5 @@
 const express = require('express');
+const uploaders3Router = require('react-dropzone-s3-uploader/s3router');
 require('dotenv').config();
 
 const app = express();
@@ -25,6 +26,17 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/recipe', recipeRouter);
+
+/* AWS S3 */
+app.use(
+  '/s3',
+  uploaders3Router({
+    bucket: 'foodpics', // required
+    region: 'us-east-2', // optional
+    headers: { 'Access-Control-Allow-Origin': '*' }, // optional
+    ACL: `public-read`, // this is the default - set to `public-read` to let anyone view uploads
+  })
+);
 
 // Serve static files
 app.use(express.static('build'));

@@ -14,6 +14,7 @@ import getDishList from './get.dish.list.saga';
 import getAccessSaga from './user.access.saga';
 import delUserSaga from './user.delete.saga';
 import updateUserSaga from './user.approve.saga';
+import getAllSaga from './all.recipes';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -39,5 +40,6 @@ export default function* rootSaga() {
     getAccessSaga(),
     delUserSaga(),
     updateUserSaga(),
+    getAllSaga(),
   ]);
 }

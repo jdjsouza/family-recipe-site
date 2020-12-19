@@ -152,18 +152,18 @@ router.get('/dish-types', (req, res) => {
 
 // Get all recipes (name, pic, brief_desc) with an ingredient specified in the search bar
 
-// router.get('/', (req, res) => {
-//   const queryText = 'SELECT id, recipe_name, picture, description FROM recipes';
-//   pool
-//     .query(queryText)
-//     .then((result) => {
-//       res.send(result.rows);
-//     })
-//     .catch((err) => {
-//       console.log('Error getting specific dish recipes', err);
-//       res.sendStatus(500);
-//     });
-// });
+router.get('/', (req, res) => {
+  const queryText = 'SELECT * FROM recipes ORDER BY "recipe_name" ASC;';
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((err) => {
+      console.log('Error getting specific dish recipes', err);
+      res.sendStatus(500);
+    });
+});
 
 // This will be used to pull all the info for the details page
 // the call ID will be passed from multiple pages: browse by creator, browse by specific dish type, search results

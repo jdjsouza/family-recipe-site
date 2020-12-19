@@ -46,6 +46,9 @@ const Nav = (props) => {
           >
             Home |
           </Link>
+          <Link item className="nav-link" to="/all">
+            All |
+          </Link>
           <Link item className="nav-link" to="/creator">
             Creator |
           </Link>
