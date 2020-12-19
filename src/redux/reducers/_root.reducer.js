@@ -10,6 +10,7 @@ import byUser from './get.by.user.reducer';
 import theUnits from './get.units.reducer';
 import theDishList from './get.dish.list.reducer';
 import theAccess from './user.access.reducer';
+import allRecipes from './all.recipes.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   theUnits, // contains the list of units of measurement
   theDishList, // contains the list of dish types
   theAccess, // contains access levels of users for admin page
+  allRecipes,
 });
 
 export default rootReducer;

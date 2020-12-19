@@ -27,6 +27,7 @@ import AddRecipe from '../AddRecipe/AddRecipe';
 import AdminPage from '../AdminPage/AdminPage';
 
 import './App.css';
+import AllRecipes from '../AllRecipes/AllRecipes';
 
 class App extends Component {
   componentDidMount() {
@@ -59,6 +60,12 @@ class App extends Component {
               exact
               path="/about"
               component={AboutPage}
+            />
+            <Route
+              // route to all recipes
+              exact
+              path="/all"
+              component={AllRecipes}
             />
 
             <Route
